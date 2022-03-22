@@ -1,5 +1,6 @@
 import React, {useState} from 'react';
-import {View, Text, TextInput, Button, TouchableOpacity} from 'react-native';
+import {View, Text, TextInput, Button, TouchableOpacity, } from 'react-native';
+import { Vibration } from 'react-native-web';
 import ResultImc from './resultImc';
 import styles from './style';
 
@@ -10,7 +11,7 @@ export default function Form(){
     const [messageImc, setMessageImc] = useState("preencha o peso e altura")
     const [imc, setImc] = useState(null)
     const [textButton, setTextButton] = useState("Calcular") 
-    const [errorMessage, seterrorMessage] = useState(null)
+    const [errorMessage, setErrorMessage] = useState(null)
 
     // Calculando o imc
     function imcCalculator(){ 
@@ -27,13 +28,23 @@ export default function Form(){
             setWeight(null)
             setMessageImc("Seu imc é igual: ")
             setTextButton("Calcular Novamente")
+            setErrorMessage(null)
             return 
         }
 
         // Senão não faz o calculo de imc e setta as mensagens
         setImc(null)
         setTextButton("Calcular")
-        setMessageImc("preencha o peso e altura")
+        verificationImc()
+        setMessageImc("preencha o peso e altura")        
+    }
+
+    // Verifica se o Imc está nullo
+    function verificationImc(){
+        if (imc == null){
+            Vibration.vibrate() // Para vibrar o celular
+            setErrorMessage("Campo obrigatório *")
+        }
     }
 
     // 'onChangeText' - conforme vai alterando esse texto vai alterando o valor da variavel passada nele
@@ -43,9 +54,11 @@ export default function Form(){
             <View style={styles.form}>
                 <Text style={styles.formLabel}>Altura</Text>
                 <TextInput style={styles.input} placeholder="EX: 1.74" keyboardType='numeric' onChangeText={setHeight} value={height}/>
+                <Text style={styles.errorMessage}>{errorMessage}</Text>
 
                 <Text style={styles.formLabel}>Peso</Text>
                 <TextInput style={styles.input} placeholder="EX: 80.5" keyboardType='numeric' onChangeText={setWeight} value={weight}/>
+                <Text style={styles.errorMessage}>{errorMessage}</Text>
 
                 {/* <Button title={textButton} onPress={()=> validationImc()}/> */}
                 <TouchableOpacity style={styles.buttonCalculator} onPress={()=> validationImc()}>

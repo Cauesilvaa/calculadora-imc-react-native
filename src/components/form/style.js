@@ -26,7 +26,7 @@ const styles = StyleSheet.create({
     },
 
     input: {
-        width: 90,
+        width: "90%",
         borderRadius: 50,
         backgroundColor: "#f6f6f6",
         height: 40,
@@ -51,11 +51,12 @@ const styles = StyleSheet.create({
         color: "#ffffff",
     },
      
-    // erroMessage: {
-    //     fontSize: 12,
-    //     color: "red",
-    //     font
-    // }
+    errorMessage: {
+        fontSize: 12,
+        color: "red",
+        fontWeight: "bold",
+        paddingLeft: 20
+    }
   });
 
   export default styles;
