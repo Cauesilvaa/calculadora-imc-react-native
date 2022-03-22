@@ -2,7 +2,7 @@ import { StyleSheet } from "react-native";
 
 const styles = StyleSheet.create({
     resultImc: {
-        marginTop: 15,
+        marginTop: 20,
         paddingTop: 20,
         borderRadius: 50,
         alignItems: "center",

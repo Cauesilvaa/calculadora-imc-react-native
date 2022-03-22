@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {View, Text, TextInput, Button, TouchableOpacity, } from 'react-native';
+import {View, Text, TextInput, Button, TouchableOpacity, Pressable, Keyboard} from 'react-native';
 import { Vibration } from 'react-native-web';
 import ResultImc from './resultImc';
 import styles from './style';
@@ -15,7 +15,8 @@ export default function Form(){
 
     // Calculando o imc
     function imcCalculator(){ 
-        return setImc((weight/(height*height)).toFixed(2)) //'toFixed(2)' - para retornar apenas 2 casas decimais
+        let heightFormat = height.replace(",", ".") // subistituindo caso o user colocar ',' tranforma em '.'
+        return setImc((weight/(heightFormat*heightFormat)).toFixed(2)) //'toFixed(2)' - para retornar apenas 2 casas decimais
     }
 
     // Validando o imc
@@ -48,8 +49,10 @@ export default function Form(){
     }
 
     // 'onChangeText' - conforme vai alterando esse texto vai alterando o valor da variavel passada nele
+    // 'Pressable' - torna oq esta dentro do pressable clicavel, captura/entende um clique nessa area
+    // 'Keyboard.dismiss' - para fechar o teclado
     return (
-        <View style={styles.formContext}>
+        <Pressable style={styles.formContext} onPress={Keyboard.dismiss}>
 
             <View style={styles.form}>
                 <Text style={styles.formLabel}>Altura</Text>
@@ -68,6 +71,6 @@ export default function Form(){
                 <ResultImc messageResultImc={messageImc} resultImc={imc}/>
             </View>
 
-        </View>
+        </Pressable>
     );
 }
